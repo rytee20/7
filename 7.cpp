@@ -1,0 +1,346 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <sstream>
+#include <stdlib.h>
+#include <Windows.h>
+#include<iomanip>
+#include <string>
+#include <fstream>
+#include <map>
+using namespace std;
+int main() {
+    map <string, int> months = {
+        {"января",1},
+        {"февраля",2},
+        {"марта",3},
+        {"апреля",4},
+        {"мая",5},
+        {"июня",6},
+        {"июля",7},
+        {"августа",8},
+        {"сентября",9},
+        {"октября",10},
+        {"ноября",11},
+        {"декабря",12}
+    };
+    setlocale(LC_ALL, "Russian");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    char buff[80];
+    int m = 0, n;
+    struct date
+    {
+        int day;
+        char* month;
+        int year;
+    };
+    struct prepod {
+        char* lastname;
+        char* firstname;
+        char* cathedra;
+        char* subject;
+        date itb;
+    };
+    cout << "Введите количество преподавателей: ";
+    cin >> n;
+    struct prepod* p = new struct prepod[n];
+    cout << "Введите преподавателя 1" << endl;
+    cout << "Фамилия: ";
+    gets_s(buff);
+    gets_s(buff);
+    p[0].lastname = new char[strlen(buff) + 1];
+    strcpy(p[0].lastname, buff);
+    cout << "Имя: ";
+    gets_s(buff);
+    p[0].firstname = new char[strlen(buff) + 1];
+    strcpy(p[0].firstname, buff);
+    cout << "Кафедра: ";
+    gets_s(buff);
+    p[0].cathedra = new char[strlen(buff) + 1];
+    strcpy(p[0].cathedra, buff);
+    cout << "Предмет: ";
+    gets_s(buff);
+    p[0].subject = new char[strlen(buff) + 1];
+    strcpy(p[0].subject, buff);
+    cout << "День итб: " << endl;
+    cin >> p[0].itb.day;
+    cout << "Месяц итб: " << endl;
+    gets_s(buff);
+    gets_s(buff);
+    p[0].itb.month = new char[strlen(buff) + 1];
+    strcpy(p[0].itb.month, buff);
+    cout << "Год итб: " << endl;
+    cin >> p[0].itb.year;
+    for (int i = 1; i < n; i++) {
+        cout << "Введите преподавателя " << i + 1 << endl;
+        cout << "Фамилия: ";
+        gets_s(buff);
+        gets_s(buff);
+        p[i].lastname = new char[strlen(buff) + 1];
+        strcpy(p[i].lastname, buff);
+        cout << "Имя: ";
+        gets_s(buff);
+        p[i].firstname = new char[strlen(buff) + 1];
+        strcpy(p[i].firstname, buff);
+        cout << "Кафедра: ";
+        gets_s(buff);
+        p[i].cathedra = new char[strlen(buff) + 1];
+        strcpy(p[i].cathedra, buff);
+        cout << "Предмет: ";
+        gets_s(buff);
+        p[i].subject = new char[strlen(buff) + 1];
+        strcpy(p[i].subject, buff);
+        cout << "День итб: " << endl;
+        cin >> p[i].itb.day;
+        cout << "Месяц итб(в родительном падеже): " << endl;
+        gets_s(buff);
+        gets_s(buff);
+        p[i].itb.month = new char[strlen(buff) + 1];
+        strcpy(p[i].itb.month, buff);
+        cout << "Год итб: " << endl;
+        cin >> p[i].itb.year;
+    }
+    /*for (int i = 0; i < n; i++) {
+        cout << endl << endl << p[i].lastname << endl << p[i].firstname << endl << p[i].cathedra << endl << p[i].subject << endl;
+    }*/
+    cout << endl << "Добавить нового преподавателя                                      1" << endl;
+    cout << "Распечатать информацию о преподавателе в табличном виде            2" << endl;
+    cout << "Найти все предметы, которые ведет данный преподаватель             3" << endl;
+    cout << "Найти всех преподавателей заданной кафедры                         4" << endl;
+    cout << "Найти и удалить заданный предмет                                   5" << endl;
+    cout << "Внести преподавателя в заданную позицию                            6" << endl;
+    cout << "Найти преподавателей, у которых с даты ИТБ прошло более 15 месяцев 7" << endl;
+    cout << "Отсортировать по фамилии в алфавитном прядке                       8" << endl;
+    cout << "Сохранить данные в файле                                           9" << endl;
+    cout << "Закончить выполнение программы                                     0" << endl;
+    cin >> m;
+    while (m < 0 && m>9) {
+        cout << "Ошибка. Повторите ввод: ";
+        cin >> m;
+    }
+    cout << endl;
+    while (m != 0) {
+        if (m == 1) {
+            n = n + 1;
+            cout << "Введите преподавателя " << n << endl;
+            cout << "Фамилия: ";
+            gets_s(buff);
+            gets_s(buff);
+            p[n - 1].lastname = new char[strlen(buff) + 1];
+            strcpy(p[n - 1].lastname, buff);
+            cout << "Имя: ";
+            gets_s(buff);
+            p[n - 1].firstname = new char[strlen(buff) + 1];
+            strcpy(p[n - 1].firstname, buff);
+            cout << "Кафедра: ";
+            gets_s(buff);
+            p[n - 1].cathedra = new char[strlen(buff) + 1];
+            strcpy(p[n - 1].cathedra, buff);
+            cout << "Предмет: ";
+            gets_s(buff);
+            p[n - 1].subject = new char[strlen(buff) + 1];
+            strcpy(p[n - 1].subject, buff);
+            cout << "День итб: " << endl;
+            cin >> p[n-1].itb.day;
+            cout << "Месяц итб(в родительном падеже): " << endl;
+            gets_s(buff);
+            gets_s(buff);
+            p[n-1].itb.month = new char[strlen(buff) + 1];
+            strcpy(p[n-1].itb.month, buff);
+            cout << "Год итб: " << endl;
+            cin >> p[n-1].itb.year;
+            /*for (int i = 0; i < n; i++) {
+                cout << endl << endl << p[i].lastname << endl << p[i].firstname << endl << p[i].cathedra << endl << p[i].subject << endl;
+            }
+            cout << endl;*/
+        }
+        else
+            if (m == 2) {
+                int k = 0, k1 = 0;
+                char* ln, * fn;
+                cout << "Введите фамилию преподавателя: ";
+                gets_s(buff);
+                gets_s(buff);
+                ln = new char[strlen(buff) + 1];
+                strcpy(ln, buff);
+                cout << "Введите имя преподавателя: ";
+                gets_s(buff);
+                fn = new char[strlen(buff) + 1];
+                strcpy(fn, buff);
+                cout << "Информация: " << endl;
+                for (int i = 0; i < n; i++)
+                    if (strcmp(ln, p[i].lastname) == 0 && strcmp(fn, p[i].firstname) == 0) k++;
+                if (k == 0) cout << "Нет такого преподавателя" << endl;
+                else {
+                    cout << setw(10) << "Фамилия" << setw(10) << "Имя" << setw(10) << "Кафедра" << setw(10) << "Предмет" << setw(10) << "Дата итб" << endl;
+                    for (int i = 0; i < n; i++) {
+                        if (strcmp(ln, p[i].lastname) == 0 && strcmp(fn, p[i].firstname) == 0) {
+                            k1++;
+                            if (k1 == 1) cout << setw(10) << p[i].lastname << setw(10) << p[i].firstname << setw(10) << p[n - 1].cathedra << setw(10) << p[i].subject << setw(10) << p[i].itb.day << " " << p[i].itb.month << " " << p[i].itb.year << endl;
+                            else cout << setw(40) << p[i].subject;
+                        }
+                    }
+                }
+                cout << endl;
+            }
+            else
+                if (m == 3) {
+                    int count = 0;
+                    char* ln, * fn;
+                    cout << "Введите фамилию преподавателя: ";
+                    gets_s(buff);
+                    gets_s(buff);
+                    ln = new char[strlen(buff) + 1];
+                    strcpy(ln, buff);
+                    cout << "Введите имя преподавателя: ";
+                    gets_s(buff);
+                    fn = new char[strlen(buff) + 1];
+                    strcpy(fn, buff);
+                    cout << "Предметы:" << endl;
+                    for (int i = 0; i < n; i++)
+                        if (strcmp(ln, p[i].lastname) == 0 && strcmp(fn, p[i].firstname) == 0) {
+                            cout << p[i].subject << endl;
+                            count++;
+                        }
+                    if (count == 0) cout << "Нет такого преподавателя";
+                }
+                else
+                    if (m == 4) {
+                        string* Names;
+                        Names = new string[n];
+                        int count = 0;
+                        char* c;
+                        cout << "Введите кафедру: ";
+                        gets_s(buff);
+                        gets_s(buff);
+                        c = new char[strlen(buff) + 1];
+                        strcpy(c, buff);
+                        for (int i = 0; i < n; i++)
+                            if (strcmp(c, p[i].cathedra) == 0) {
+                                Names[count] = string() + p[i].lastname + ' ' + p[i].firstname;
+                                count++;
+                            }
+                        if (count == 0) cout << "Нет преподавателей этой кафедры";
+                        else {
+                            for (int i = 0; i < count - 1; i++) {
+                                for (int j = i + 1; j < count; j++)
+                                    if (Names[i] > Names[j]) {
+                                        swap(Names[i], Names[j]);
+                                    }
+                            }
+                            for (int i = 0; i < count - 1; i++) {
+                                if (Names[i] == Names[i + 1]) {
+                                    swap(Names[i + 1], Names[count - 1]);
+                                    count--;
+                                }
+                            }
+                            cout << "Преподаватели заданной кафедры: " << endl;
+                            for (int i = 0; i < count; i++) cout << Names[i] << endl;
+                        }
+                    }
+                    else if (m == 6) {
+                        int N;
+                        cout << "Введите позицию: ";
+                        cin >> N;
+                        n++;
+                        for (int i = n-2; i >= N-1; i--) {
+                            swap(p[i], p[i + 1]);
+                        }
+                        cout << "Введите преподавателя " << N << endl;
+                        cout << "Фамилия: ";
+                        gets_s(buff);
+                        gets_s(buff);
+                        p[N-1].lastname = new char[strlen(buff) + 1];
+                        strcpy(p[N - 1].lastname, buff);
+                        cout << "Имя: ";
+                        gets_s(buff);
+                        p[N - 1].firstname = new char[strlen(buff) + 1];
+                        strcpy(p[N - 1].firstname, buff);
+                        cout << "Кафедра: ";
+                        gets_s(buff);
+                        p[N - 1].cathedra = new char[strlen(buff) + 1];
+                        strcpy(p[N - 1].cathedra, buff);
+                        cout << "Предмет: ";
+                        gets_s(buff);
+                        p[N - 1].subject = new char[strlen(buff) + 1];
+                        strcpy(p[N-1].subject, buff);
+                        cout << "День итб: " << endl;
+                        cin >> p[N-1].itb.day;
+                        cout << "Месяц итб(в родительном падеже): " << endl;
+                        gets_s(buff);
+                        p[N-1].itb.month = new char[strlen(buff) + 1];
+                        strcpy(p[N-1].itb.month, buff);
+                        cout << "Год итб: " << endl;
+                        cin >> p[N-1].itb.year;
+                        /*for (int i = 0; i < n; i++) {
+                        cout << endl << endl << p[i].lastname << endl << p[i].firstname << endl << p[i].cathedra << endl << p[i].subject << endl;
+                        }
+                        cout << endl;*/
+                    }
+                    else if (m == 5) {
+                        char* s;
+                        cout << "Введите предмет: ";
+                        gets_s(buff);
+                        gets_s(buff);
+                        s = new char[strlen(buff) + 1];
+                        strcpy(s, buff);
+                        for (int i = 0; i < n; i++)
+                            if (strcmp(s, p[i].subject) == 0) {
+                                for (int j = i; j < n - 1; j++) {
+                                    swap(p[i], p[i + 1]);
+                                }
+                                n--;
+                                i = 0;
+                            }
+                        /*for (int i = 0; i < n; i++) {
+                        cout << endl << endl << p[i].lastname << endl << p[i].firstname << endl << p[i].cathedra << endl << p[i].subject << endl;
+                        }
+                        cout << endl;*/
+                    }
+                    else if (m == 7) {
+                        prepod* start{p};
+                        time_t timer = time(0);
+                        struct tm* u;
+                        u = localtime(&timer);
+                        cout << "Преподаватели: " << endl;
+                        for (int i = 0; i < n; i++) {
+                            *start = p[i];
+                            if (u->tm_year * 12 + u->tm_mon + 1 - (start->itb.year - 1900) * 12 - months[start->itb.month] > 15) {
+                                cout << p[i].lastname << " " << p[i].firstname << endl;
+                            }
+                        }
+                    }
+                    else if (m==8) {
+                         for (int i = 0; i < n - 1; i++) {
+                             for (int j = i + 1; j < n; j++)
+                                 if (p[i].lastname > p[j].lastname) {
+                                     swap(p[i], p[j]);
+                                 }
+                         }
+                    }
+                    else if (m == 9) {
+                        ofstream File;
+                        File.open("prepod.txt");
+                        File << setw(10) << "Фамилия" << setw(10) << "Имя" << setw(10) << "Кафедра" << setw(10) << "Предмет" << endl;
+                        for (int i = 0; i < n; i++) {
+                            File << setw(10) << p[i].lastname << setw(10) << p[i].firstname << setw(10) << p[i].cathedra << setw(10) << p[i].subject << endl;
+                        }
+                        File.close();
+                    }
+        cout << endl << "Добавить нового преподавателя                                      1" << endl;
+        cout << "Распечатать информацию о преподавателе в табличном виде            2" << endl;
+        cout << "Найти все предметы, которые ведет данный преподаватель             3" << endl;
+        cout << "Найти всех преподавателей заданной кафедры                         4" << endl;
+        cout << "Найти и удалить заданный предмет                                   5" << endl;
+        cout << "Внести преподавателя в заданную позицию                            6" << endl;
+        cout << "Найти преподавателей, у которых с даты ИТБ прошло более 15 месяцев 7" << endl;
+        cout << "Отсортировать по фамилии в алфавитном прядке                       8" << endl;
+        cout << "Записать данные в файл                                             9" << endl;
+        cout << "Закончить выполнение программы                                     0" << endl;
+        cin >> m;
+        while (m < 0 && m>9) {
+            cout << "Ошибка. Повторите ввод: ";
+            cin >> m;
+        }
+    }
+}
